@@ -14,10 +14,16 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tareas")
 public class Tarea {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(name = "nombre", nullable = false)
     private String nombre;
+    @Column(name = "descripcion", nullable = false)
     private String descripcion;
+    @JoinColumn(name = "id_motivo", referencedColumnName = "id_motivo")
+    @ManyToOne(optional = false)
+    private Motivo id_motivo;
  
     public Tarea() {
   
@@ -28,16 +34,14 @@ public class Tarea {
          this.descripcion = descripcion;
     }
  
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-        public long getId() {
+    public long getId() {
         return id;
     }
     public void setId(long id) {
         this.id = id;
     }
  
-    @Column(name = "nombre", nullable = false)
+    
     public String getName() {
         return nombre;
     }
@@ -45,12 +49,19 @@ public class Tarea {
         this.nombre = nombre;
     }
  
-    @Column(name = "descripcion", nullable = false)
     public String getDescription() {
         return descripcion;
     }
     public void setDescription(String descripcion) {
         this.descripcion = descripcion;
+    }
+    
+     public void setId_motivo(Motivo id_motivo) {
+        this.id_motivo = id_motivo;
+    }
+
+    public Motivo getId_motivo() {
+        return id_motivo;
     }
  
     @Override
@@ -58,5 +69,5 @@ public class Tarea {
         return "Tarea [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion 
         + "]";
     }
- 
+
 }

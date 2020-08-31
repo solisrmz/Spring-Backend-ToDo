@@ -5,17 +5,14 @@
  */
 package com.example.todo.Repository;
 
+import com.example.todo.Models.Motivo;
+import com.example.todo.Models.Tarea;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  *
  * @author José A Solís
  */
-
-import com.example.todo.Models.Tarea;
-import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface TareaRepository extends JpaRepository<Tarea, Long>{
-    
+public interface MotivoRepository extends JpaRepository<Motivo, String>{
+    public Motivo findByNombre(String nombre);
 }

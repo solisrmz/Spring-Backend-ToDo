@@ -12,11 +12,11 @@
 	<artifactId>todo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>todo</name>
-	<description>todo app con spring</description>        
+	<description>todo app con spring</description>
+        <packaging>jar</packaging>       
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
-        <packaging>war</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -37,11 +37,6 @@
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>
                         <scope>runtime</scope>
-                </dependency>
-                <dependency>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-tomcat</artifactId>
-                        <scope>provided</scope>
                 </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

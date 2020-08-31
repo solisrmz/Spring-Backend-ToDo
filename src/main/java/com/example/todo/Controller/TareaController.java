@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 package com.example.todo.Controller;
+import com.example.todo.Models.Motivo;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import com.example.todo.Models.Tarea;
 import com.example.todo.exception.ResourceNotFoundException;
-import com.example.todo.Repository.TareaRepository;
+import com.example.todo.Repository.*;
+import com.example.todo.clases.TareaMotivo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +20,14 @@ import org.springframework.http.ResponseEntity;
  *
  * @author José A Solís
  */
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(("/api/v1"))
 public class TareaController {
     @Autowired
     private TareaRepository tareaRepository;
+    @Autowired
+    private MotivoRepository motivoRepository;
 
     //Para obtener todas mis tareas
     @GetMapping("/todos")
@@ -42,8 +46,12 @@ public class TareaController {
     
     //Insertar una nueva tarea a la base de datos
     @PostMapping("/create-todo")
-    public Tarea createTodo(@Valid @RequestBody Tarea tarea) {
-        return tareaRepository.save(tarea);
+    public Tarea createTodo(@Valid @RequestBody TareaMotivo tarea) {
+        Tarea t = tarea.getTarea();
+        String nombreMotivo = tarea.getNombreMotivo();
+        Motivo m = motivoRepository.findByNombre(nombreMotivo);
+        t.setId_motivo(m);
+        return tareaRepository.save(t);
     }
     
     //Para actualizar una tarea
@@ -70,5 +78,21 @@ public class TareaController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
+    }
+    
+    @PostMapping("/motivo-create")
+    public Motivo guardar(@Valid @RequestBody Motivo motivo) {
+        return motivoRepository.save(motivo);
+    }
+    
+    @GetMapping("/motivos")
+    public List<Motivo> getMotivos(){
+        return motivoRepository.findAll();
+    }
+    
+    @GetMapping("/motivo-id//{nombre}")
+    public ResponseEntity<Motivo>obtenerMotivo(@PathVariable(value = "nombre") String nombre){
+       Motivo motivo = motivoRepository.findByNombre(nombre);
+       return ResponseEntity.ok().body(motivo);
     }
 }
