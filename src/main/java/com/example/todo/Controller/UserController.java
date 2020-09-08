@@ -34,7 +34,9 @@ public class UserController {
     UserRepository userRepo;
     
         @PostMapping("/login")
-	public TokenUsuario login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+	public TokenUsuario login(@Valid @RequestBody Usuario user) {
+            String username = user.getNombre();
+            String pwd = user.getPassword();
             if(validarUsuario(username, pwd)){
                String token = getJWTToken(username);
                return new TokenUsuario(token, username); 
