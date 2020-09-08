@@ -8,6 +8,7 @@ import com.example.todo.Models.Motivo;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import com.example.todo.Models.Tarea;
+import com.example.todo.Models.Usuario;
 import com.example.todo.exception.ResourceNotFoundException;
 import com.example.todo.Repository.*;
 import com.example.todo.clases.TareaMotivo;
@@ -28,6 +29,8 @@ public class TareaController {
     private TareaRepository tareaRepository;
     @Autowired
     private MotivoRepository motivoRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     //Para obtener todas mis tareas
     @GetMapping("/todos")
@@ -94,5 +97,23 @@ public class TareaController {
     public ResponseEntity<Motivo>obtenerMotivo(@PathVariable(value = "nombre") String nombre){
        Motivo motivo = motivoRepository.findByNombre(nombre);
        return ResponseEntity.ok().body(motivo);
+    }
+    
+    @PostMapping("/create-user")
+    public Usuario createUser(@Valid @RequestBody Usuario user){
+        if(validarUsuario(user.getNombre())){
+            return new Usuario("Ya existe este usuario");
+        }
+        return userRepository.save(user);
+    }
+    
+    private boolean validarUsuario(String username) {
+            Usuario user = userRepository.findByNombre(username);
+                if (user != null) {
+                    if (user.getNombre().equals(username)) {
+                    return true;
+                }
+            }
+        return false;
     }
 }

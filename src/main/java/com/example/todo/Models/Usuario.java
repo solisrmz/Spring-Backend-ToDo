@@ -6,6 +6,7 @@
 package com.example.todo.Models;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -13,23 +14,31 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="users")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
+})
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre")
     private String nombre;
-    @Column(name = "password", nullable = false)
-    private String pass;
+    @Column(name = "password")
+    private String password;
     
     public Usuario(){
         
     }
+    
+    public Usuario(String nombre){
+        this.nombre = nombre;
+    }
 
-    public Usuario(long id, String nombre, String pass) {
+    public Usuario(long id, String nombre, String password) {
         this.id = id;
         this.nombre = nombre;
-        this.pass = pass;
+        this.password = password;
     }
 
     public void setId(long id) {
@@ -40,8 +49,8 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public void setDescripcion(String pass) {
-        this.pass = pass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public long getId() {
@@ -52,13 +61,13 @@ public class Usuario {
         return nombre;
     }
 
-    public String getDescripcion() {
-        return pass;
+    public String getPassword() {
+        return password;
     }
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + pass + '}';
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", contraseña=" + password + '}';
     }
     
     

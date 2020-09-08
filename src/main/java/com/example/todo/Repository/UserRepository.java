@@ -5,10 +5,13 @@
  */
 package com.example.todo.Repository;
 
+import com.example.todo.Models.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  *
  * @author José A Solís
  */
-public interface UserRepository {
-    
+public interface UserRepository extends JpaRepository<Usuario, Long>{
+    public Usuario findByNombre(String nombre);
 }
