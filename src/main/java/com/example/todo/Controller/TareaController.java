@@ -21,7 +21,6 @@ import org.springframework.http.ResponseEntity;
  *
  * @author José A Solís
  */
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(("/api/v1"))
 public class TareaController {

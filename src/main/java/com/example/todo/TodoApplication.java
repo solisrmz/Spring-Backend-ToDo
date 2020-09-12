@@ -10,14 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
-public class TodoApplication extends SpringBootServletInitializer{
+public class TodoApplication{
 	public static void main(String[] args) {
             SpringApplication.run(TodoApplication.class, args);
 	}
-        @Override
-        protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-            return application.sources(TodoApplication.class);
-        }
+        
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
